@@ -7,7 +7,6 @@ package billingsoftware;
 
 
 import admin.AdminPanel;
-import customer.CustomerPanel;
 import dbcon.DbOperations;
 import gettersetter.Register;
 import java.awt.event.ActionEvent;
@@ -181,11 +180,7 @@ public class Login extends javax.swing.JFrame {
                         new employee.EmployeePanel(reg).setVisible(true);
                         setVisible(false);
                     }
-                    else if(module.equals("Customer"))
-                    {
-                        new CustomerPanel(reg).setVisible(true);
-                        setVisible(false);
-                    }
+            
                    
                 }
                 else

@@ -323,9 +323,14 @@ public class StartBilling extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-        String item_id=jTextField1.getText();
-        ResultSet rs=DbOperations.getItemDetails(item_id);
-        try
+        //String item_id=jTextField1.getText();
+        int id=Integer.parseInt(jTextField1.getText());
+        //String cat=(String)jComboBox1.getSelectedItem();
+       
+       
+//        if(id>=100 || id>=200 || id>=300){
+             ResultSet rs=DbOperations.getItemDetails(id);
+             try
         {
             if(rs.next())
             {
@@ -361,6 +366,8 @@ public class StartBilling extends javax.swing.JFrame {
         {
             e.printStackTrace();
         }
+            
+        //}
     }//GEN-LAST:event_jTextField1KeyReleased
 
     void emptyDetails()

@@ -75,11 +75,11 @@ public class EditEmployees extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Sr.No", "Name", "Email"
+                "Sr.No", "Reg Id", "Name", "Email"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,7 +108,6 @@ public class EditEmployees extends javax.swing.JFrame {
         jTextField1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 180, 349, 45));
 
-        jTextField2.setEditable(false);
         jTextField2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(635, 296, 358, 47));
 
@@ -180,6 +179,7 @@ public class EditEmployees extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
        String name1, email1;
+       int id;
        int srno=0;
        try
        {
@@ -189,10 +189,11 @@ public class EditEmployees extends javax.swing.JFrame {
                 while(rs.next())
                 {
                     srno=srno+1;
+                    id=rs.getInt("reg_id");
                     name1=rs.getString("name");
                     email1=rs.getString("email");
                     
-                    row=new Object[]{srno, name1, email1};
+                    row=new Object[]{srno,id, name1, email1};
                     dtm.addRow(row);
                 }
             }
@@ -226,8 +227,10 @@ public class EditEmployees extends javax.swing.JFrame {
         reg.setPassword(password1);
         reg.setPhoneno(phoneno1);
         reg.setGender(gender);
+        int row=jTable1.getSelectedRow();
+        int reg_id=(int)jTable1.getValueAt(row, 1);
         
-        int i=DbOperations.updateEmpDetails(reg);  
+        int i=DbOperations.updateEmpDetails(reg_id,reg);  
         
         if(i>0)
         {
@@ -245,8 +248,9 @@ public class EditEmployees extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         int row=jTable1.getSelectedRow();
-        String selected_email=(String)jTable1.getValueAt(row, 2);
-        ResultSet rs=DbOperations.gerSelectedEmployees(selected_email);
+        int id=(int)jTable1.getValueAt(row, 1);
+        //String selected_email=(String)jTable1.getValueAt(row, 2);
+        ResultSet rs=DbOperations.gerSelectedEmployees(id);
         try
         {
             if(rs!=null)

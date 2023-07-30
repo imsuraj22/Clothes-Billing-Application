@@ -69,6 +69,7 @@ public class EditItems extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
 
@@ -162,7 +163,7 @@ public class EditItems extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(586, 521, 341, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Select Category", "Mens", "Womens", "Childrens" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Men", "Woman", "Children" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -214,6 +215,14 @@ public class EditItems extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1082, 607, 95, 35));
 
+        jButton4.setText("Fetch");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 720, 90, 30));
+
         jButton3.setText("Delete");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,7 +232,7 @@ public class EditItems extends javax.swing.JFrame {
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(1082, 709, 95, 36));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clothes 22.jpg"))); // NOI18N
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 1220, 700));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 1230, 690));
 
         pack();
         setLocationRelativeTo(null);
@@ -253,8 +262,9 @@ public class EditItems extends javax.swing.JFrame {
         
           DefaultTableModel dtm=(DefaultTableModel)jTable1.getModel();
         
+          String item_category=(String)jComboBox1.getSelectedItem();
         int srno=0;
-        ResultSet rs=DbOperations.getAllItems();
+        ResultSet rs=DbOperations.getAllItems(item_category);
         if(rs!=null)
         {
             try
@@ -277,8 +287,10 @@ public class EditItems extends javax.swing.JFrame {
         // TODO add your handling code here:
         
           int row=jTable1.getSelectedRow();
-        String item_id=(String)jTable1.getValueAt(row, 1);
-        ResultSet rs=DbOperations.getItemDetails(item_id);
+        //String item_id=(String)jTable1.getValueAt(row, 1);
+        int id=Integer.parseInt((String)jTable1.getValueAt(row, 1));
+        String cat=(String)jComboBox1.getSelectedItem();
+        ResultSet rs=DbOperations.getItemDetails(id);
         
         if(rs!=null)
         {
@@ -320,7 +332,8 @@ public class EditItems extends javax.swing.JFrame {
         // TODO add your handling code here:
         
           String item_id=jTextField1.getText();
-        boolean status=DbOperations.deleteItem(item_id);
+          String cat=(String)jComboBox1.getSelectedItem();
+        boolean status=DbOperations.deleteItem(cat,item_id);
         if(status)
         {
             JOptionPane.showMessageDialog(rootPane, "Item deleted successfully");
@@ -367,7 +380,7 @@ public class EditItems extends javax.swing.JFrame {
             }
             else
             {
-                boolean status=DbOperations.updateItemWithoutImage(item_id, item_name, item_price, item_desc, item_category);
+                boolean status=DbOperations.updateItemWithoutImage(item_id, item_name, item_price, item_category, item_desc);
                 if(status)
                 {
                     JOptionPane.showMessageDialog(rootPane, "Item updated successfully");
@@ -423,7 +436,39 @@ public class EditItems extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+//        new EditItems().setVisible(true);
+//        setVisible(false);
+         DefaultTableModel dtm=(DefaultTableModel)jTable1.getModel();
+         while (dtm.getRowCount() > 0) {
+            dtm.removeRow(0);
+        }
+          String item_category=(String)jComboBox1.getSelectedItem();
+        int srno=0;
+        ResultSet rs=DbOperations.getAllItems(item_category);
+        if(rs!=null)
+        {
+            try
+            {
+                while(rs.next())
+                {
+                    srno=srno+1;
+                    Object[] obj={srno, rs.getString("item_id"), rs.getString("item_name")};
+                    dtm.addRow(obj);
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
    
     
@@ -432,6 +477,7 @@ public class EditItems extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

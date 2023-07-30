@@ -17,10 +17,16 @@ public class DbConnection
     static Connection con;
     static public Connection getConnection()
     {
+        
+//        Properties properties = new Properties();
+//    properties.setProperty("user", "root");
+//    properties.setProperty("password", "milos23");
+//    properties.setProperty("useSSL", "false");
+
         try
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/billing_software","root","MySQL@22");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/billing_software?autoReconnect=true&useSSL=false","springstudent","springstudent");
         }
         catch(Exception e)
         {

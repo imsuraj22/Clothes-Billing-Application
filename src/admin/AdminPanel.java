@@ -40,6 +40,7 @@ public class AdminPanel extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
@@ -117,7 +118,19 @@ public class AdminPanel extends javax.swing.JFrame {
                 jLabel8MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 596, -1, 160));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 580, -1, 160));
+
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/billingnew.png"))); // NOI18N
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel11.setMaximumSize(new java.awt.Dimension(150, 150));
+        jLabel11.setMinimumSize(new java.awt.Dimension(150, 150));
+        jLabel11.setPreferredSize(new java.awt.Dimension(150, 150));
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 550, 230, 180));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/items1.png"))); // NOI18N
         jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -129,7 +142,7 @@ public class AdminPanel extends javax.swing.JFrame {
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 350, 240, 190));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clothes 44.jpg"))); // NOI18N
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 840, 790));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 0, 850, 800));
 
         pack();
         setLocationRelativeTo(null);
@@ -187,11 +200,18 @@ public class AdminPanel extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_jLabel9MouseClicked
 
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        new CustomerPanel().setVisible(true);
+        setVisible(false);
+    }//GEN-LAST:event_jLabel11MouseClicked
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

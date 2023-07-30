@@ -45,7 +45,7 @@ public class DbOperations
         {
             Connection con=DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("insert into register values(?,?,?,?,?,?)");
+            PreparedStatement ps=con.prepareStatement("insert into register (name,email,password,gender,phone_no,module) values(?,?,?,?,?,?)");
             
             ps.setString(1, reg.getName());
             ps.setString(2, reg.getEmail());
@@ -86,14 +86,14 @@ public class DbOperations
         }
         return rs;
     }
-    public static ResultSet gerSelectedEmployees(String email)
+    public static ResultSet gerSelectedEmployees(int id)
     {
         ResultSet rs = null;
         try
         {
             Connection con=dbcon.DbConnection.getConnection();
-            PreparedStatement ps=con.prepareStatement("select * from register where email=?");
-            ps.setString(1 , email);
+            PreparedStatement ps=con.prepareStatement("select * from register where reg_id=?");
+            ps.setInt(1 , id);
             
             rs=ps.executeQuery();  
         }
@@ -104,19 +104,20 @@ public class DbOperations
         return rs;
     }
     
-    public static int updateEmpDetails(Register reg)
+    public static int updateEmpDetails(int reg_id,Register reg)
     {
         int i = 0;
         try
         {
             Connection con=dbcon.DbConnection.getConnection();
-            PreparedStatement ps=con.prepareStatement("update register set name=?, password=?, gender=?, phone_no=? where email=?");
+                PreparedStatement ps=con.prepareStatement("update register set name=?, password=?, gender=?, phone_no=? ,email=? where reg_id=?");
             
             ps.setString(1, reg.getName());
             ps.setString(2, reg.getPassword());
             ps.setString(3, reg.getGender());
             ps.setString(4, reg.getPhoneno());
             ps.setString(5, reg.getEmail());
+            ps.setInt(6, reg_id);
             
             i=ps.executeUpdate();
         }
@@ -153,13 +154,13 @@ public class DbOperations
         try
         {
             Connection con=dbcon.DbConnection.getConnection();
-            PreparedStatement ps=con.prepareStatement("insert into items values(?,?,?,?,?,?)");
+            PreparedStatement ps=con.prepareStatement("insert into "+str[2]+"(item_name, item_price, item_category, item_desc,item_image) values(?,?,?,?,?)");
             ps.setString(1, str[0]);
             ps.setString(2, str[1]);
             ps.setString(3, str[2]);
             ps.setString(4, str[3]);
-            ps.setString(5, str[4]);
-            ps.setBinaryStream(6, fis);
+            //ps.setString(5, fid);
+            ps.setBinaryStream(5, fis);
             
             int i=ps.executeUpdate();
             if(i>0)
@@ -178,14 +179,14 @@ public class DbOperations
         return status;
     }
     
-     public static ResultSet getAllItems()
+     public static ResultSet getAllItems(String cat)
     {
         ResultSet rs = null;
         try
         {
             Connection con=DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("select * from items");
+            PreparedStatement ps=con.prepareStatement("select * from "+cat);
             rs=ps.executeQuery();
         }
         catch(Exception e)
@@ -195,33 +196,42 @@ public class DbOperations
         return rs;
     }
      
-     public static ResultSet getItemDetails(String item_id)
+     public static ResultSet getItemDetails(int item_id)
     {
+        String cat="";
+        if(item_id<300){
+            cat="men";
+        }else if(item_id<600 && item_id>=300){
+            cat="woman";
+        }else{
+            cat="children";
+        }
         ResultSet rs = null;
         try
         {
             Connection con=DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("select * from items where item_id=?");
-            ps.setString(1, item_id);
+            PreparedStatement ps=con.prepareStatement("select * from "+cat+" where item_id=?");
+            ps.setInt(1, item_id);
             rs=ps.executeQuery();
         }
         catch(Exception e)
         {
+            System.out.println("inside exception");
             System.out.println(e);
         }
         return rs;
     }
     
-      public static boolean deleteItem(String item_id)
+      public static boolean deleteItem(String cat,String item_id)
     {
         boolean status=false;
         try
         {
             Connection con=DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("delete from items where item_id=?");
-            ps.setString(1, item_id);
+            PreparedStatement ps=con.prepareStatement("delete from "+cat+" where item_id=?");
+            ps.setInt(1, Integer.parseInt(item_id));
             
             int i=ps.executeUpdate();
             if(i>0)
@@ -247,7 +257,7 @@ public class DbOperations
         {
             Connection con=DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("update items set item_name=?, item_price=?, item_category=?, item_desc=?, item_image=? where item_id=?");
+            PreparedStatement ps=con.prepareStatement("update "+str[3]+" set item_name=?, item_price=?, item_category=?, item_desc=?, item_image=? where item_id=?");
             ps.setString(1, str[1]);
             ps.setString(2, str[2]);
             ps.setString(3, str[3]);
@@ -279,7 +289,7 @@ public class DbOperations
         {
             Connection con=DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("update items set item_name=?, item_price=?, item_desc=?, item_category=? where item_id=?");
+            PreparedStatement ps=con.prepareStatement("update "+str[3]+" set item_name=?, item_price=?, item_category=?, item_desc=? where item_id=?");
             ps.setString(1, str[1]);
             ps.setString(2, str[2]);
             ps.setString(3, str[3]);
@@ -394,21 +404,19 @@ public class DbOperations
           boolean status=false;
           String name1=str[0];
           String email1=str[1];
-          String pass1=str[2];
-          String gender1=str[3];
-          String phone_no=str[4];
-          String module=str[5];
+          String gender1=str[2];
+          String phone_no=str[3];
+         
           
           try
           {
             Connection con=DbConnection.getConnection();  
-            PreparedStatement ps=con.prepareStatement("insert into register values(?,?,?,?,?,?)");
+            PreparedStatement ps=con.prepareStatement("insert into customer (name,email,gender,phone_no) values(?,?,?,?)");
             ps.setString(1, name1);
             ps.setString(2, email1);
-            ps.setString(3, pass1);
-            ps.setString(4, gender1);
-            ps.setString(5, phone_no);
-            ps.setString(6, module);
+            ps.setString(3, gender1);
+            ps.setInt(4, Integer.parseInt(phone_no));
+           
             
             int i=ps.executeUpdate();
             if(i>0)
@@ -434,8 +442,8 @@ public class DbOperations
           try
           {
             Connection con=DbConnection.getConnection();  
-            PreparedStatement ps=con.prepareStatement("select * from register where phone_no=?");
-            ps.setString(1, phoneno);
+            PreparedStatement ps=con.prepareStatement("select * from customer where phone_no=?");
+            ps.setInt(1, Integer.parseInt(phoneno));
             
             rs=ps.executeQuery();
           }
@@ -446,15 +454,15 @@ public class DbOperations
           return rs;
       }
       
-      public static boolean customerBillingDetails(String customer_phno, String items, String date1, String time1, String emp_email)
+      public static boolean customerBillingDetails(int customer_phno, String items, String date1, String time1, String emp_email)
     {
         boolean status=false;
         try
         {
             Connection con=dbcon.DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("insert into customer_shopping_details values(?,?,?,?,?)");
-            ps.setString(1, customer_phno);
+            PreparedStatement ps=con.prepareStatement("insert into customerbilling values(?,?,?,?,?)");
+            ps.setInt(1, customer_phno);
             ps.setObject(2, items);
             ps.setString(3, date1);
             ps.setString(4, time1);
@@ -476,17 +484,17 @@ public class DbOperations
         }
         return status;
     }
-      public static ResultSet getCustomerShoppingDetails(String phno)
+      public static ResultSet getCustomerShoppingDetails()
       {
           ResultSet rs=null;
           try
           {
               Connection con=dbcon.DbConnection.getConnection();
             
-            PreparedStatement ps=con.prepareStatement("select * from customer_shopping_details where customer_phone=?");
-            ps.setString(1, phno);
+            PreparedStatement ps=con.prepareStatement("select * from customerbilling ");
+            //ps.setString(1, phno);
             rs=ps.executeQuery();
-            
+             // System.out.println("fetch data successfully");
             
           }
           catch(Exception e)

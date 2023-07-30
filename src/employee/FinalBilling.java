@@ -72,6 +72,7 @@ public class FinalBilling extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
+        jButton2 = new javax.swing.JButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel12 = new javax.swing.JLabel();
 
@@ -132,7 +133,7 @@ public class FinalBilling extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
         );
@@ -219,12 +220,20 @@ public class FinalBilling extends javax.swing.JFrame {
         });
         getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(798, 549, -1, -1));
 
+        jButton2.setText("Continue");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 690, 110, 40));
+
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Female");
         getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(919, 549, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cash.jpg"))); // NOI18N
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 1180, 640));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 120, 1190, 650));
 
         pack();
         setLocationRelativeTo(null);
@@ -249,10 +258,6 @@ public class FinalBilling extends javax.swing.JFrame {
         jLabel2.setForeground(Color.white);
     }//GEN-LAST:event_jLabel2MouseExited
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
@@ -275,21 +280,21 @@ public class FinalBilling extends javax.swing.JFrame {
             {
                 gender="F";
             }
-            String module1="Customer";
-            String pass1="";
-            for(int i=0; i<=2; i++)
-            {
-                pass1=pass1+name.charAt(i);
-            }
-            for(int i=9; i>=7; i--)
-            {
-                pass1=pass1+phone_no.charAt(i); 
-            }
-            boolean status=DbOperations.insertCustomerdetails(name, email, pass1, gender, phone_no, module1);
+//            String module1="Customer";
+//            String pass1="";
+//            for(int i=0; i<=2; i++)
+//            {
+//                pass1=pass1+name.charAt(i);
+//            }
+//            for(int i=9; i>=7; i--)
+//            {
+//                pass1=pass1+phone_no.charAt(i); 
+//            }
+            boolean status=DbOperations.insertCustomerdetails(name, email, gender, phone_no);
             if(status)
             {
                 JOptionPane.showMessageDialog(rootPane, "Customer added successfully");
-                new Payment(rm, hm,jTextField1.getText(), jTextField3.getText(), jTextField2.getText()).setVisible(true);
+                new Payment(rm, hm,jTextField1.getText(), jTextField3.getText(),  Integer.parseInt(jTextField2.getText())).setVisible(true);
                 setVisible(false);
             }
             else
@@ -299,7 +304,7 @@ public class FinalBilling extends javax.swing.JFrame {
         }
         else
         {
-            new Payment(rm, hm,jTextField1.getText(), jTextField3.getText(), jTextField2.getText()).setVisible(true);
+            new Payment(rm, hm,jTextField1.getText(), jTextField3.getText(), Integer.parseInt(jTextField2.getText())).setVisible(true);
             setVisible(false);
         }
        }
@@ -312,6 +317,7 @@ public class FinalBilling extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         
+        jLabel1.setText("Welcome : "+rm.getName());
         DefaultTableModel dtm=(DefaultTableModel)jTable1.getModel();
         int srno=0;
         int total_bill=0;
@@ -376,11 +382,23 @@ public class FinalBilling extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextField2KeyReleased
 
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new Payment(rm, hm,jTextField1.getText(), "", 0).setVisible(true);
+            setVisible(false);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

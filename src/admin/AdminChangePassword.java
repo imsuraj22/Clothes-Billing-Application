@@ -134,8 +134,8 @@ public class AdminChangePassword extends javax.swing.JFrame {
                 if(new_pass.equals(confirm_pass))
             {
                 boolean status2=DbOperations.updatePassword(new_pass, "suraj@gmail.com");
-                if(status)
-                {
+//                if(status)
+//                {
                     if(status2)
                     {
                         JOptionPane.showMessageDialog(rootPane, "Password updated successfully");
@@ -144,7 +144,7 @@ public class AdminChangePassword extends javax.swing.JFrame {
                         jTextField3.setText("");
                         
                     }
-                }
+                //}
             }
             else
             {

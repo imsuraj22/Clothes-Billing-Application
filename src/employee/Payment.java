@@ -29,8 +29,8 @@ public class Payment extends javax.swing.JFrame {
     HashMap<String, ArrayList> hm;
     String totalbill;
     String name;
-    String phno;
-    public Payment(Register rs, HashMap hm, String totalbill, String name, String phno) {
+    int phno;
+    public Payment(Register rs, HashMap hm, String totalbill, String name, int phno) {
          try
             {
                  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -50,7 +50,7 @@ public class Payment extends javax.swing.JFrame {
         jLabel1.setText("Welcome : "+rs.getName());
         jLabel4.setText("Hello : "+name);
         jTextField1.setText(totalbill);
-        jTextField4.setText(phno);
+        jTextField4.setText(Integer.toString(phno));
         jButton1.setVisible(false);
     }
 
