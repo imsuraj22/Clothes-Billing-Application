@@ -18,7 +18,7 @@
 
 <h2 id="description">Description</h2>
 
-<p>This project is an Inventory Management System developed in Java that provides functionalities for both administrators and employees. It uses Java, MySQL, and Swing for the graphical user interface. The system allows admins to manage items and employees, while employees can generate bills for customers and store billing data into the database.</p>
+<p>This project is an Clothes Billing Appliation developed in Java that provides functionalities for both administrators and employees. It uses Java, MySQL, and Swing for the graphical user interface. The system allows admins to manage items and employees, while employees can generate bills for customers and store billing data into the database.</p>
 
 <h2 id="features">Features</h2>
 
