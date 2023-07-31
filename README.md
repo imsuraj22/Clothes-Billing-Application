@@ -1,6 +1,6 @@
 <h1>Clothes Billing System</h1>
 
-<p>A Java-based Inventory Management System using Java, MySQL, and Swing.</p>
+<p>A Java-based Clothes Billing System using Java, MySQL, and Swing.</p>
 
 <h2>Table of Contents</h2>
 
